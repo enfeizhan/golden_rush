@@ -47,5 +47,26 @@
         app:layout_constraintTop_toBottomOf="@id/text_counter"
         app:layout_constraintLeft_toRightOf="@id/btn_plus"
         />
+    <Button
+        android:id="@+id/btn_hide_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hide/Show"
+        android:onClick="operation"
+        app:layout_constraintTop_toBottomOf="@id/text_counter"
+        app:layout_constraintRight_toLeftOf="@id/btn_plus"
+        />
+
+    <ImageView
+        android:id="@+id/iv_meme"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:src="@drawable/a1"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
