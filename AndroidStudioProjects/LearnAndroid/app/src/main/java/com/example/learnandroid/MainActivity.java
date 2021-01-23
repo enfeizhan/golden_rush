@@ -9,9 +9,18 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.learnandroid.model.SearchResponse;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView txtCounter;
-    private Button btnPlus, btnMinus, btnReset, btnHideShow ;
+    private Button btnPlus, btnMinus, btnReset, btnHideShow, send;
     private ImageView ivMeme;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnReset = findViewById(R.id.btn_reset);
         btnHideShow = findViewById(R.id.btn_hide_show);
         ivMeme = findViewById(R.id.iv_meme);
+        send = findViewById(R.id.btn_send);
 
         btnPlus.setOnClickListener(this);
         btnMinus.setOnClickListener(this);
@@ -37,6 +47,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                APIService apiService = APIClient.getAPIClient().create(APIService.class);
+                Map<String, String> params = new HashMap<>();
+                params.put("action", "query");
+                params.put("format", "json");
+                params.put("list", "search");
+                params.put("srsearch", "Nikola Tesla");
+
+                Call<SearchResponse> call = apiService.searchWiki(params);
+                call.enqueue(new Callback<SearchResponse>() {
+                    @Override
+                    public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<SearchResponse> call, Throwable t) {
+                        Toast.makeText(MainActivity.this, "Could not retrieve data!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
 /*
         btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
