@@ -11,73 +11,78 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
-        android:textSize="20sp"
         android:textColor="#000"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_plus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Plus"
         android:onClick="operation"
-        app:layout_constraintTop_toBottomOf="@id/text_counter"
+        android:text="Plus"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@id/text_counter" />
+
     <Button
         android:id="@+id/btn_minus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Minus"
         android:onClick="operation"
-        app:layout_constraintTop_toBottomOf="@id/btn_plus"
+        android:text="Minus"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@id/btn_plus" />
+
     <Button
         android:id="@+id/btn_reset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reset"
         android:onClick="operation"
-        app:layout_constraintTop_toBottomOf="@id/text_counter"
+        android:text="Reset"
         app:layout_constraintLeft_toRightOf="@id/btn_plus"
-        />
+        app:layout_constraintTop_toBottomOf="@id/text_counter" />
+
     <Button
         android:id="@+id/btn_hide_show"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hide/Show"
         android:onClick="operation"
-        app:layout_constraintTop_toBottomOf="@id/text_counter"
+        android:text="Hide/Show"
         app:layout_constraintRight_toLeftOf="@id/btn_plus"
-        />
+        app:layout_constraintTop_toBottomOf="@id/text_counter" />
 
     <Button
-        android:id="@+id/btn_send"
+        android:id="@+id/btn_add_camera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Send"
         android:onClick="operation"
-        app:layout_constraintTop_toBottomOf="@id/btn_minus"
+        android:text="Add Camera"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@id/btn_minus" />
 
-    <ImageView
-        android:id="@+id/iv_meme"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitXY"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent"
+    <Button
+        android:id="@+id/btn_remove_camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="operation"
+        android:text="Remove Camera"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:src="@drawable/a1"/>
+        app:layout_constraintTop_toBottomOf="@id/btn_add_camera" />
+
+    <WebView
+        android:id="@+id/webcam"
+        android:layout_width="270dp"
+        android:layout_height="160dp"
+        app:layout_constraintBottom_toTopOf="@id/text_counter"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

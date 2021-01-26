@@ -2,26 +2,28 @@ package com.example.learnandroid;
 
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.learnandroid.model.SearchResponse;
+import com.example.learnandroid.model.AddCameraResponse;
+import com.example.learnandroid.model.RemoveCameraResponse;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.learnandroid.APIClient.getAPIClient;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView txtCounter;
-    private Button btnPlus, btnMinus, btnReset, btnHideShow, send;
-    private ImageView ivMeme;
+    private Button btnPlus, btnMinus, btnReset, btnHideShow, addCamera, removeCamera;
+    private WebView webcam;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,8 +33,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnMinus = findViewById(R.id.btn_minus);
         btnReset = findViewById(R.id.btn_reset);
         btnHideShow = findViewById(R.id.btn_hide_show);
-        ivMeme = findViewById(R.id.iv_meme);
-        send = findViewById(R.id.btn_send);
+        addCamera = findViewById(R.id.btn_add_camera);
+        removeCamera = findViewById(R.id.btn_remove_camera);
 
         btnPlus.setOnClickListener(this);
         btnMinus.setOnClickListener(this);
@@ -40,38 +42,54 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnHideShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ivMeme.getVisibility() == View.VISIBLE) {
+                /*if (ivMeme.getVisibility() == View.VISIBLE) {
                     ivMeme.setVisibility(View.GONE);
                 } else {
                     ivMeme.setVisibility(View.VISIBLE);
-                }
+                }*/
             }
         });
-        send.setOnClickListener(new View.OnClickListener() {
+        APIService apiService = getAPIClient().create(APIService.class);
+        addCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                APIService apiService = APIClient.getAPIClient().create(APIService.class);
-                Map<String, String> params = new HashMap<>();
-                params.put("action", "query");
-                params.put("format", "json");
-                params.put("list", "search");
-                params.put("srsearch", "Nikola Tesla");
-
-                Call<SearchResponse> call = apiService.searchWiki(params);
-                call.enqueue(new Callback<SearchResponse>() {
+                HashMap<String, String> addCameraBody = new HashMap<>();
+                addCameraBody.put("camURL", "0");
+                addCameraBody.put("application", "detect_motion");
+                addCameraBody.put("detectionMethod", "opencv");
+                addCameraBody.put("camUUID", "ok");
+                Call<AddCameraResponse> call = apiService.AddCamera(addCameraBody);
+                call.enqueue(new Callback<AddCameraResponse>() {
                     @Override
-                    public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
-
+                    public void onResponse(Call<AddCameraResponse> call, Response<AddCameraResponse> response){
+                        webcam = findViewById(R.id.webcam);
+                        webcam.loadUrl("http://192.168.1.109:5000/api/video/video_streamer/ok");
                     }
-
                     @Override
-                    public void onFailure(Call<SearchResponse> call, Throwable t) {
+                    public void onFailure(Call<AddCameraResponse> call, Throwable t) {
                         Toast.makeText(MainActivity.this, "Could not retrieve data!", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         });
 
+        removeCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HashMap<String, String> removeCameraBody = new HashMap<>();
+                removeCameraBody.put("camUUID", "ok");
+                Call<RemoveCameraResponse> call = apiService.RemoveCamera(removeCameraBody);
+                call.enqueue(new Callback<RemoveCameraResponse>() {
+                    @Override
+                    public void onResponse(Call<RemoveCameraResponse> call, Response<RemoveCameraResponse> response) {
+                    }
+                    @Override
+                    public void onFailure(Call<RemoveCameraResponse> call, Throwable t) {
+                        Toast.makeText(MainActivity.this, "Could not retrieve data!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
 /*
         btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override

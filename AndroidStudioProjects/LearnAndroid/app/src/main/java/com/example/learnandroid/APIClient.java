@@ -6,7 +6,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APIClient {
-    private static final String BASE_URL = "https://en.wikipedia.org";
+    private static final String BASE_URL = "http://192.168.1.109:5000";
     private static Retrofit retrofit = null;
     public static Retrofit getAPIClient() {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
@@ -19,7 +19,7 @@ public class APIClient {
                 .addInterceptor(httpLoggingInterceptor)
                 .build();
         if (retrofit == null) {
-            Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
+            retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
                     .client(client).addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
